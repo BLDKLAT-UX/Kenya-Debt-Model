@@ -1,4 +1,5 @@
 # 🇰🇪 Kenya Public Debt Sustainability Analysis Model
+  ![test](https://github.com/<username>/<repo>/actions/workflows/test.yml/badge.svg)
 ![Dashboard Preview](docs/dashboard_screenshot.png)
 
 [![CI](https://github.com/YOUR_USERNAME/kenya-debt-model/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/kenya-debt-model/actions)
