@@ -1,4 +1,5 @@
 # 🇰🇪 Kenya Public Debt Sustainability Analysis Model
+![Dashboard Preview](docs/dashboard_screenshot.png)
 
 [![CI](https://github.com/YOUR_USERNAME/kenya-debt-model/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/kenya-debt-model/actions)
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python)](https://www.python.org)
