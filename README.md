@@ -255,4 +255,4 @@ refer to [PDMO published bulletins](https://www.pdmo.go.ke).
 ---
 
 *Built with Python · openpyxl · reportlab · Dash · Plotly*
-*Framework: IMF LIC-DSF 2018 · Prepared by PDMO · September 2026*
+*Framework: IMF LIC-DSF 2018 · Prepared by Dan Baraka · September 2026*
