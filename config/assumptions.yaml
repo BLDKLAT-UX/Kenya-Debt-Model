@@ -1,0 +1,180 @@
+# =============================================================================
+# Kenya Debt Sustainability Analysis Model — Master Assumptions File
+# =============================================================================
+# All input data lives here. Edit this file to update the model.
+# Python scripts read from this file — never hardcode data in src/ files.
+#
+# Structure:
+#   meta        — model metadata
+#   years       — fiscal year labels and projection boundary
+#   real_sector — GDP, growth, inflation, exchange rate
+#   external    — exports, imports, FDI, reserves, remittances
+#   rates       — CBR, T-bill, bond yields, concessional rates
+#   debt_stock  — domestic, external, guaranteed portfolio
+#   fiscal      — revenue, expenditure, balances
+#   thresholds  — IMF LIC-DSF stress thresholds
+# =============================================================================
+
+meta:
+  country: Kenya
+  currency: KES
+  unit: Billions
+  base_year: "FY2024/25"
+  projection_start: "FY2025/26"
+  framework: IMF LIC-DSF 2018
+  policy_space: Strong
+  classification: "Sustainable but at High Risk"
+  prepared_by: Public Debt Management Office (PDMO)
+  last_updated: "September 2026"
+
+# ── Fiscal Year Labels
+years:
+  labels:
+    - "FY22/23"
+    - "FY23/24"
+    - "FY24/25"
+    - "FY25/26"
+    - "FY26/27"
+    - "FY27/28"
+    - "FY28/29"
+    - "FY29/30"
+  integers: [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
+  projection_from_index: 3   # FY25/26 onwards are projections (0-indexed)
+
+# ── A. Real Sector
+real_sector:
+  nominal_gdp_kes_bn:     [12100, 13200, 14400, 15800, 17300, 18900, 20600, 22400]
+  real_gdp_growth_pct:    [4.8,   5.6,   5.4,   5.6,   5.8,   6.0,   6.0,   6.0]
+  gdp_deflator_pct:       [7.8,   6.0,   5.5,   5.2,   5.0,   4.8,   4.8,   4.8]
+  cpi_inflation_avg_pct:  [7.9,   6.3,   5.0,   4.8,   4.5,   4.5,   4.5,   4.5]
+  usd_kes_exchange_rate:  [132,   148,   128,   130,   132,   134,   136,   138]
+
+# ── B. External Sector
+external_sector:
+  exports_kes_bn:          [1890, 2100, 2350, 2580, 2820, 3070, 3350, 3650]
+  imports_kes_bn:          [3200, 3450, 3680, 3900, 4100, 4310, 4530, 4760]
+  current_account_pct_gdp: [-5.4, -4.8, -4.2, -3.9, -3.6, -3.3, -3.1, -2.9]
+  fdi_inflows_usd_mn:      [830,  960,  1020, 1100, 1200, 1300, 1400, 1500]
+  reserves_months_imports: [3.8,  4.0,  4.2,  4.4,  4.6,  4.8,  5.0,  5.2]
+  remittances_usd_mn:      [3980, 4200, 4500, 4700, 4900, 5100, 5300, 5500]
+
+# ── C. Monetary & Market Rates (all in %)
+rates:
+  cbr:                     [10.50, 13.00, 11.25, 10.50, 9.50, 9.00, 9.00, 9.00]
+  tbill_91d:               [10.10, 16.00, 12.80, 11.50, 10.50, 9.80, 9.50, 9.50]
+  tbill_182d:              [10.30, 16.50, 13.20, 12.00, 11.00, 10.20, 9.80, 9.80]
+  tbill_364d:              [10.60, 17.00, 13.60, 12.50, 11.50, 10.60, 10.20, 10.20]
+  bond_2yr:                [12.00, 17.50, 14.50, 13.50, 12.50, 11.50, 11.00, 11.00]
+  bond_5yr:                [13.50, 18.00, 15.00, 14.00, 13.00, 12.00, 11.50, 11.50]
+  bond_10yr:               [13.80, 18.50, 15.50, 14.50, 13.50, 12.50, 12.00, 12.00]
+  concessional_external:   [1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50, 1.50]
+  china_exim:              [3.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00, 3.00]
+  eurobond_new_issuance:   [9.75, 10.50, 9.50, 9.00, 8.50, 8.00, 7.50, 7.50]
+
+# ── D. Debt Stock (KES Billions)
+debt_stock:
+  domestic:
+    tbills_91d:   [320, 370, 400, 420, 430, 430, 430, 430]
+    tbills_182d:  [180, 200, 220, 230, 230, 230, 230, 230]
+    tbills_364d:  [350, 380, 420, 430, 430, 430, 420, 420]
+    bonds_2yr:    [180, 200, 210, 220, 220, 220, 220, 220]
+    bonds_5yr:    [320, 380, 420, 450, 460, 460, 460, 460]
+    bonds_10yr:   [520, 640, 730, 790, 810, 820, 820, 820]
+    bonds_15yr:   [160, 180, 200, 210, 220, 220, 220, 220]
+    bonds_25yr:   [80,  100, 120, 130, 140, 150, 160, 170]
+    bonds_infra:  [40,   50,  60,  70,  80,  90, 100, 110]
+    cbk_overdraft:[150, 180, 110,  80,  60,  40,  20,   0]
+    holder_shares:
+      commercial_banks: 0.45
+      pension_funds:    0.30
+      cbk:              0.18
+      other:            0.07
+  external:
+    world_bank_ida: [1120, 1250, 1310, 1340, 1360, 1370, 1370, 1360]
+    afdb:           [420,  460,  490,  510,  520,  525,  520,  510]
+    imf:            [310,  390,  380,  350,  320,  290,  260,  230]
+    china_exim:     [980, 1050, 1080, 1090, 1090, 1080, 1060, 1040]
+    paris_club:     [220,  200,  185,  170,  155,  140,  125,  110]
+    eurobonds:      [880,  920,  780,  780,  780,  780,  780,  780]
+    other_bilateral:[230,  240,  250,  255,  255,  250,  245,  240]
+  guaranteed:
+    kengen: [100,  95,  90,  87,  84,  83,  83,  83]
+    kq:     [ 80,  76,  72,  68,  64,  60,  58,  56]
+    kpa:    [ 40,  38,  36,  34,  32,  30,  28,  26]
+
+# ── E. Fiscal Framework (KES Billions)
+fiscal:
+  revenue:
+    total:          [1980, 2210, 2420, 2750, 3040, 3360, 3710, 4100]
+    tax:            [1820, 2030, 2210, 2520, 2790, 3090, 3420, 3790]
+    kra_collections:[1790, 2000, 2170, 2480, 2750, 3050, 3380, 3750]
+    other_tax:      [  30,   30,   40,   40,   40,   40,   40,   40]
+    non_tax:        [ 120,  130,  150,  170,  190,  210,  230,  250]
+    grants:         [  40,   50,   60,   60,   60,   60,   60,   60]
+  expenditure:
+    total:          [2960, 3350, 3850, 4120, 4380, 4650, 4940, 5250]
+    wages:          [ 720,  790,  870,  930, 1000, 1060, 1120, 1190]
+    operations:     [ 380,  420,  460,  490,  520,  550,  580,  610]
+    interest_dom:   [ 530,  660,  820,  880,  920,  950,  980, 1010]
+    interest_ext:   [ 250,  280,  330,  370,  400,  430,  450,  470]
+    development:    [ 580,  620,  680,  740,  790,  850,  930, 1020]
+    net_lending:    [ 180,  210,  270,  300,  330,  350,  370,  380]
+  debt_service:
+    domestic_principal: [420, 480, 560, 620, 660, 680, 700, 720]
+    external_principal: [180, 220, 280, 310, 330, 350, 370, 390]
+
+# ── F. IMF LIC-DSF Thresholds (Strong Policy Space)
+thresholds:
+  pv_ext_debt_gdp_pct:      40.0
+  pv_ext_debt_exports_pct:  180.0
+  pv_ext_debt_revenue_pct:  250.0
+  ext_ds_exports_pct:       15.0
+  ext_ds_revenue_pct:       18.0
+  pv_total_debt_gdp_pct:    55.0
+  ds_revenue_pct:           30.0
+  ds_gdp_pct:               10.0
+  interest_revenue_pct:     20.0
+  atm_domestic_years:       4.0
+  refinancing_risk_pct:     20.0
+  fx_share_pct:             50.0
+
+# ── G. Stress Test Scenarios (Debt/GDP %, DS/Rev %, PV Ext/GDP %, Primary/GDP %)
+stress_tests:
+  projection_years: ["FY24/25","FY25/26","FY26/27","FY27/28","FY28/29","FY29/30"]
+  scenarios:
+    baseline:
+      description: "Gradual consolidation, revenue growth on track, stable exchange rate"
+      debt_gdp:    [63.7, 62.5, 61.0, 59.8, 58.5, 57.2]
+      ds_rev:      [71.2, 66.5, 62.0, 58.8, 55.2, 52.0]
+      pv_ext_gdp:  [29.8, 28.5, 27.5, 26.8, 26.0, 25.5]
+      primary_gdp: [-2.3, -1.8, -1.2, -0.7,  0.0,  0.5]
+    lower_growth:
+      description: "Real GDP 2pp lower each year — drought, global slowdown"
+      debt_gdp:    [65.8, 66.4, 66.9, 67.3, 67.5, 67.4]
+      ds_rev:      [73.5, 70.2, 67.8, 65.2, 62.8, 60.5]
+      pv_ext_gdp:  [30.8, 30.5, 30.2, 29.9, 29.5, 29.0]
+      primary_gdp: [-2.9, -2.6, -2.2, -1.8, -1.4, -1.0]
+    fx_depreciation:
+      description: "KES depreciates 20% vs USD in FY25/26, partial recovery thereafter"
+      debt_gdp:    [63.7, 69.2, 67.8, 65.5, 63.0, 61.0]
+      ds_rev:      [71.2, 74.8, 71.5, 68.2, 65.0, 62.0]
+      pv_ext_gdp:  [29.8, 34.1, 33.0, 31.5, 30.2, 29.2]
+      primary_gdp: [-2.3, -2.0, -1.5, -0.9, -0.3,  0.2]
+    interest_rate_shock:
+      description: "Domestic yields 300bps higher from FY25/26, elevated refinancing"
+      debt_gdp:    [63.7, 64.0, 63.2, 62.1, 61.0, 60.0]
+      ds_rev:      [71.2, 72.0, 69.5, 67.0, 64.5, 62.0]
+      pv_ext_gdp:  [29.8, 29.0, 28.2, 27.5, 26.8, 26.2]
+      primary_gdp: [-2.3, -2.5, -2.0, -1.5, -0.9, -0.4]
+    revenue_shortfall:
+      description: "Revenue 15% below baseline from FY25/26 — Finance Bill analog"
+      debt_gdp:    [63.7, 66.8, 68.4, 70.1, 71.5, 72.8]
+      ds_rev:      [71.2, 78.2, 75.9, 73.4, 70.8, 68.5]
+      pv_ext_gdp:  [29.8, 29.5, 29.2, 28.8, 28.5, 28.0]
+      primary_gdp: [-2.3, -4.0, -3.8, -3.5, -3.2, -2.9]
+    optimistic_reform:
+      description: "Tax compliance improves, MTDS executed, concessional financing scales up"
+      debt_gdp:    [63.7, 61.0, 58.8, 56.5, 54.2, 52.0]
+      ds_rev:      [71.2, 63.5, 58.8, 54.2, 50.0, 46.5]
+      pv_ext_gdp:  [29.8, 28.0, 26.5, 25.2, 23.8, 22.5]
+      primary_gdp: [-2.3, -0.8,  0.5,  1.5,  2.2,  2.8]

@@ -1,10 +1,57 @@
-# API key — never upload this to GitHub
+# ── Secrets — NEVER commit these
+.env
 api_key.txt
+*.key
+*.pem
 
-# Python cache
+# ── Generated outputs — reproducible from code
+outputs/
+logs/
+
+# ── Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
 
-# Excel temp files
+# ── Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# ── Testing & coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# ── IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Excel temp files
 ~$*.xlsx
+~$*.xls
+
+# ── Jupyter (if added later)
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Kiro
+.kiro/
