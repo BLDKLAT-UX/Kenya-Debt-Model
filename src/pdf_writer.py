@@ -303,9 +303,11 @@ class PDFWriter:
             f"{self.m.meta['base_year']}, equivalent to "
             f"<b>{self.m.debt_gdp[base_i]:.1f}% of GDP</b> at face value and "
             f"<b>{self.m.pv_total_gdp[base_i]:.1f}% on a present-value basis</b> — "
-            "breaching the IMF LIC-DSF composite anchor of 55%. "
-            "Kenya is spending <b>71 cents of every revenue shilling</b> on debt "
-            "service, leaving minimal fiscal space for development expenditure.",
+            f"{'breaching' if self.m.pv_total_gdp[base_i] > 55 else 'remaining below'} "
+            "the IMF LIC-DSF composite anchor of 55%. "
+            f"Kenya is spending <b>{self.m.ds_revenue[base_i]/100:.2f} of every revenue "
+            "shilling</b> on debt service, leaving minimal fiscal space for "
+            "development expenditure.",
             s["body"]))
         story.append(Spacer(1, 0.25*cm))
 
@@ -353,10 +355,12 @@ class PDFWriter:
 
         watchpoints = [
             (RED,    WHITE, "🔴 CRITICAL",
-             "Debt service = 71.2% of revenue — IMF threshold is 30%. "
+             f"Debt service = {self.m.ds_revenue[base_i]:.1f}% of revenue — IMF threshold is 30%. "
              "Fiscal space is severely compressed."),
-            (RED,    WHITE, "🔴 CRITICAL",
-             "PV total debt/GDP at 63.7% breaches the 55% composite anchor."),
+            (RED if self.m.pv_total_gdp[base_i] > 55 else AMBER, WHITE, "🔴 CRITICAL",
+             f"PV total debt/GDP at {self.m.pv_total_gdp[base_i]:.1f}% "
+             f"{'breaches' if self.m.pv_total_gdp[base_i] > 55 else 'is below'} "
+             "the 55% composite anchor."),
             (AMBER,  BLACK, "🟠 ELEVATED",
              "T-bill rollover risk: KES 1.04 Tn with domestic ATM of 2.7 years."),
             (AMBER,  BLACK, "🟠 ELEVATED",

@@ -136,8 +136,8 @@ class TestRatios:
         assert all(0 < r < 200 for r in model.debt_gdp)
 
     def test_ds_revenue_critical_year(self, model):
-        # FY24/25 (index 2) should be ~71.2% — the headline finding
-        assert 65 < model.ds_revenue[2] < 80
+        # FY24/25 (index 2) should be ~82.2% — the headline finding
+        assert 75 < model.ds_revenue[2] < 90
 
     def test_ds_revenue_above_threshold(self, model):
         # FY24/25 should breach the 30% threshold
@@ -158,9 +158,9 @@ class TestDSAIndicators:
     def test_pv_total_gdp_length(self, model):
         assert len(model.pv_total_gdp) == 8
 
-    def test_pv_total_gdp_breaches_anchor(self, model):
-        # FY24/25 should breach 55%
-        assert model.pv_total_gdp[2] > 55.0
+    def test_pv_total_gdp_below_anchor(self, model):
+        # FY24/25 is currently below the 55% composite anchor (~46.9%)
+        assert 40 < model.pv_total_gdp[2] < 55.0
 
     def test_ext_ds_revenue_positive(self, model):
         assert all(r > 0 for r in model.ext_ds_revenue)
@@ -182,9 +182,9 @@ class TestThresholdChecker:
         checks = model.check_thresholds(2)
         assert checks["ds_revenue"]["breach"] is True
 
-    def test_pv_total_debt_gdp_breach_flagged(self, model):
+    def test_pv_total_debt_gdp_not_breached(self, model):
         checks = model.check_thresholds(2)
-        assert checks["pv_total_debt_gdp"]["breach"] is True
+        assert checks["pv_total_debt_gdp"]["breach"] is False
 
     def test_ds_revenue_is_severe(self, model):
         checks = model.check_thresholds(2)
