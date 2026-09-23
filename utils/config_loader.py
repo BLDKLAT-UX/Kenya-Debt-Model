@@ -19,6 +19,7 @@ from pathlib import Path
 import yaml
 
 from utils.logger import get_logger
+from utils.validators import validate_assumptions
 
 log = get_logger(__name__)
 
@@ -58,13 +59,21 @@ def load_config(path: str | None = None) -> dict:
             "Expected at: config/assumptions.yaml"
         )
 
-    log.debug("Loading config from %s", config_file)
-    with open(config_file, encoding="utf-8") as f:
-        cfg = yaml.safe_load(f)
+        log.debug("Loading config from %s", config_file)
+    try:
+        with open(config_file, encoding="utf-8") as f:
+            cfg = yaml.safe_load(f)
+    except OSError as exc:
+        raise OSError(f"Unable to read config file {config_file}: {exc}") from exc
+    except yaml.YAMLError as exc:
+        raise ValueError(f"Invalid YAML in config file {config_file}: {exc}") from exc
+
+    if not isinstance(cfg, dict):
+        raise ValueError(f"Config file {config_file} must contain a top-level mapping")
 
     log.debug("Config loaded: %d top-level keys", len(cfg))
+    validate_assumptions(cfg)
     return cfg
-
 
 def reload_config(path: str | None = None) -> dict:
     """Force reload by clearing the cache, then loading fresh."""
